@@ -67,22 +67,20 @@
    <div id="linksContainer"></div>
 
     <div class="footer">
-        &copy; 2025 Erryl Alvares
+        &copy; 2026 Erryl Alvares
     </div>
 
     <script>
         // Array of links
         const links = [
-            { name: "Ent", href: "HarkTheHerald" },
+            { name: "Ent: New Life", href: "" },
             { name: "Lord Have Mercy", href: "LHMYouth" },
-            { name: "Gloria", href: "GloryDanS" },
+            { name: "Gloria", href: "" },
             { name: "Acc", href: "AccSeekYeDavidsCty" },
-            { name: "Offertory", href: "RupemBhangar" },
-            { name: "Holy (Povitr)", href: "Povitr" },
-            { name: "Devache Xellie", href: "DevaXellieLitTown" },
-            { name: "Communion", href: "WhatChildIsThis" },
-            { name: "PCo: While Shep.", href: "WhileShepardsWatched" },
-            { name: "Rec: Vis Dis", href: "VisVasDis" }
+            { name: "Off: C3", href: "" },
+            { name: "Holy", href: "" },
+            { name: "Comm: JM?", href: "" },
+            { name: "Rec: ", href: "" }
         ];
 
         // Function to create a table of links
@@ -128,12 +126,12 @@
                     link.href =  baseURL.concat(links[i].href, "/", links[i].href, "Sheet.pdf" );
                      link.textContent = "Sheet";
                      cell.appendChild(link);
-			 cell.appendChild(document.createElement('br'));
-                    link = document.createElement('a');
-                    link.href = baseURL.concat("LyricsA.htm?file=", links[i].href);
-                    link.textContent = links[i].name;
-                    cell.appendChild(link);
-                    row.appendChild(cell);
+			//  cell.appendChild(document.createElement('br'));
+            //         link = document.createElement('a');
+            //         link.href = baseURL.concat("LyricsA.htm?file=", links[i].href);
+            //         link.textContent = links[i].name;
+            //         cell.appendChild(link);
+            //         row.appendChild(cell);
 
                     //Sheet
                     cell = document.createElement('td');
