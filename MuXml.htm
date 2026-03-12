@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MusicXML Horizontal Viewer</title>
-    <script src="https://unpkg.com/opensheetmusicdisplay@1.6.1/dist/opensheetmusicdisplay.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/opensheetmusicdisplay@latest/build/opensheetmusicdisplay.min.js"></script>
     <style>
         body { margin: 0; padding: 0; background-color: white; overflow: hidden; font-family: sans-serif; }
         #score-container {
@@ -40,7 +40,7 @@
 
 <script>
     let osmd;
-    let currentZoom = 1.2;
+    let currentZoom = 1.0;
 
     function getFileNameFromQuery() {
         const urlParams = new URLSearchParams(window.location.search);
