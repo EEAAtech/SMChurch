@@ -1,36 +1,102 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Choir Horizontal Viewer</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MusicXML Horizontal Viewer</title>
     <script src="https://cdn.jsdelivr.net/npm/opensheetmusicdisplay@latest/build/opensheetmusicdisplay.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: white;
+            overflow: hidden;
+            font-family: sans-serif;
+        }
+        #score-container {
+            width: 100vw;
+            height: 100vh;
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+        /* Floating Semi-Transparent Buttons */
+        .zoom-btn {
+            position: fixed;
+            top: 10px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid rgba(0,0,0,0.1);
+            background: rgba(255, 255, 255, 0.5); /* Semi-transparent white */
+            color: #333;
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            user-select: none;
+            backdrop-filter: blur(4px); /* Modern frosted glass effect */
+        }
+        .zoom-btn:active {
+            background: rgba(200, 200, 200, 0.8);
+        }
+        #btn-minus { left: 10px; }
+        #btn-plus { right: 10px; }
+    </style>
 </head>
-<body style="margin: 0; background: #fff; overflow-y: hidden;">
+<body>
 
-    <div id="score-container" style="width: 100vw; height: 100vh; overflow-x: auto; overflow-y: hidden;"></div>
+    <div id="btn-minus" class="zoom-btn" onclick="changeZoom(-0.1)">−</div>
+    <div id="btn-plus" class="zoom-btn" onclick="changeZoom(0.1)">+</div>
 
-    <script>
-        // Initialize OSMD
-        const osmd = new opensheetmusicdisplay.OpenSheetMusicDisplay("score-container", {
+    <div id="score-container"></div>
+
+<script>
+    let osmd;
+    let currentZoom = 1.2;
+
+    function getFileNameFromQuery() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get('file'); 
+    }
+
+    function changeZoom(delta) {
+        if (!osmd) return;
+        currentZoom = Math.max(0.3, Math.min(3.0, currentZoom + delta));
+        osmd.zoom = currentZoom;
+        osmd.render();
+    }
+
+    const fileName = getFileNameFromQuery();
+    const container = document.getElementById('score-container');
+
+    if (fileName) {
+        // Construct path: folder/file.xml 
+        // Note: change to .musicxml below if Logic Pro exports with that extension
+        const xmlUrl = `${fileName}/${fileName}.xml`;
+
+        osmd = new opensheetmusicdisplay.OpenSheetMusicDisplay("score-container", {
             autoResize: true,
-            backend: "canvas", // Canvas is often smoother for mobile horizontal scrolling
-            drawingParameters: "compacttight", 
-            drawPartNames: true
-        });
-
-        // Set the horizontal layout BEFORE loading
-        osmd.setOptions({
+            backend: "canvas",
+            drawingParameters: "compacttight",
             renderSingleHorizontalStaffline: true
         });
 
-        // Path to your MusicXML
-        const xmlUrl = "https://eeaatech.github.io/Easter2026/AccSeekYeDavidsCty/AccSeekYeFirst.xml";
-
         osmd.load(xmlUrl).then(() => {
-            osmd.zoom = 1.0; // Adjust as needed for phone screen size
+            osmd.zoom = currentZoom;
             osmd.render();
         }).catch(err => {
-            console.error("Error loading MusicXML:", err);
+            console.error("Error:", err);
+            container.innerHTML = `<p style="padding:60px;">File not found: ${xmlUrl}</p>`;
         });
-    </script>
+    } else {
+        container.innerHTML = '<p style="padding:60px;">No ?file= parameter provided.</p>';
+    }
+</script>
+
 </body>
 </html>

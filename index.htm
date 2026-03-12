@@ -168,11 +168,11 @@
                     link.href =  baseURL.concat(links[i].href, "/", links[i].href, "Sheet.pdf" );
                      link.textContent = "Sheet";
                      cell.appendChild(link);
-			//  cell.appendChild(document.createElement('br'));
-            //         link = document.createElement('a');
-            //         link.href = baseURL.concat("LyricsA.htm?file=", links[i].href);
-            //         link.textContent = links[i].name;
-            //         cell.appendChild(link);
+			 cell.appendChild(document.createElement('br'));
+                    link = document.createElement('a');
+                    link.href = baseURL.concat("MuXml.htm?file=", links[i].href);
+                    link.textContent = links[i].name;
+                    cell.appendChild(link);
                      row.appendChild(cell);
 
                     //Sheet
