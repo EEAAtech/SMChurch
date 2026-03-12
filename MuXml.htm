@@ -2,28 +2,35 @@
 <html>
 <head>
     <title>Choir Horizontal Viewer</title>
-    <script src="https://cdn.jsdelivr.net/npm/opensheetmusicdisplay@1.6.1/dist/opensheetmusicdisplay.min.js"></script>
+    <script src="https://unpkg.com/opensheetmusicdisplay@1.6.1/dist/opensheetmusicdisplay.min.js"></script>
 </head>
-<body style="margin: 0; background: #fff;">
+<body style="margin: 0; background: #fff; overflow-y: hidden;">
 
-    <div id="score-container" style="width: 100vw; overflow-x: auto; overflow-y: hidden;"></div>
+    <div id="score-container" style="width: 100vw; height: 100vh; overflow-x: auto; overflow-y: hidden;"></div>
 
     <script>
+        // Initialize OSMD
         const osmd = new opensheetmusicdisplay.OpenSheetMusicDisplay("score-container", {
             autoResize: true,
-            drawTitle: true,
-            // THIS IS THE KEY: "endless" renders as one long line
+            backend: "canvas", // Canvas is often smoother for mobile horizontal scrolling
             drawingParameters: "compacttight", 
-            renderSingleHorizontalStaffline: true 
+            drawPartNames: true
         });
 
-        // Replace with the path to your MusicXML file
-        osmd.load("https://eeaatech.github.io/Easter2026/AccSeekYeDavidsCty/AccSeekYeFirst.xml")
-            .then(() => {
-                // Set the zoom level (e.g., 1.0 = 100%)
-                osmd.zoom = 1.0; 
-                osmd.render();
-            });
+        // Set the horizontal layout BEFORE loading
+        osmd.setOptions({
+            renderSingleHorizontalStaffline: true
+        });
+
+        // Path to your MusicXML
+        const xmlUrl = "https://eeaatech.github.io/Easter2026/AccSeekYeDavidsCty/AccSeekYeFirst.xml";
+
+        osmd.load(xmlUrl).then(() => {
+            osmd.zoom = 1.0; // Adjust as needed for phone screen size
+            osmd.render();
+        }).catch(err => {
+            console.error("Error loading MusicXML:", err);
+        });
     </script>
 </body>
 </html>
