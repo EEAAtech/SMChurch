@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Choir Horizontal Viewer</title>
+    <script src="https://cdn.jsdelivr.net/npm/opensheetmusicdisplay@1.6.1/dist/opensheetmusicdisplay.min.js"></script>
+</head>
+<body style="margin: 0; background: #fff;">
+
+    <div id="score-container" style="width: 100vw; overflow-x: auto; overflow-y: hidden;"></div>
+
+    <script>
+        const osmd = new opensheetmusicdisplay.OpenSheetMusicDisplay("score-container", {
+            autoResize: true,
+            drawTitle: true,
+            // THIS IS THE KEY: "endless" renders as one long line
+            drawingParameters: "compacttight", 
+            renderSingleHorizontalStaffline: true 
+        });
+
+        // Replace with the path to your MusicXML file
+        osmd.load("https://eeaatech.github.io/Easter2026/AccSeekYeFirst/AccSeekYeFirst.xml")
+            .then(() => {
+                // Set the zoom level (e.g., 1.0 = 100%)
+                osmd.zoom = 1.0; 
+                osmd.render();
+            });
+    </script>
+</body>
+</html>
