@@ -69,17 +69,17 @@
             backend: "canvas",
             drawingParameters: "compacttight",
             renderSingleHorizontalStaffline: true,
-            followCursor: true
+            followCursor: true,
+            drawPartNames: true // Shows voice names (Main, Seconds, Thirds)
         });
     }
 
     function togglePlay() {
-        const playBtn = document.getElementById('btn-play');
         if (!isPlaying) {
             isPlaying = true;
-            playBtn.innerText = "■";
-            playBtn.style.color = "#c0392b";
-            playNextNote();
+            document.getElementById('btn-play').innerText = "■";
+            document.getElementById('btn-play').style.color = "#c0392b";
+            playNextStep();
         } else {
             stopPlayback();
         }
@@ -87,45 +87,43 @@
 
     function stopPlayback() {
         isPlaying = false;
-        const playBtn = document.getElementById('btn-play');
-        playBtn.innerText = "▶";
-        playBtn.style.color = "#27ae60";
+        document.getElementById('btn-play').innerText = "▶";
+        document.getElementById('btn-play').style.color = "#27ae60";
         clearTimeout(playbackTimeout);
         osmd.cursor.reset();
         document.getElementById('score-container').scrollTo({ left: 0, behavior: 'smooth' });
     }
 
-    function playNextNote() {
+    function playNextStep() {
         if (!isPlaying) return;
 
-        // 1. Get duration of the current note/rest at the cursor
-        // OSMD uses 'RealValue' where 1.0 = whole note, 0.25 = quarter note
-        const currentNoteDuration = osmd.cursor.Iterator.CurrentVoiceEntries[0]?.Notes[0]?.Length?.RealValue || 0.25;
+        // Correct Multi-Voice Logic:
+        // Instead of looking at one note, we look at the 'timestamp' duration 
+        // until the next musical event in ANY voice.
+        const currentFraction = osmd.cursor.Iterator.currentTimeStamp.RealValue;
+        osmd.cursor.next();
+        const nextFraction = osmd.cursor.Iterator.currentTimeStamp.RealValue;
         
-        // 2. Calculate delay in milliseconds based on BPM
-        // (Length * 4) converts to beats (e.g. quarter note 0.25 * 4 = 1 beat)
+        // Calculate the difference in duration
+        const durationDiff = nextFraction - currentFraction;
+        
         const msPerBeat = (60 / detectedBPM) * 1000;
-        const delay = (currentNoteDuration * 4) * msPerBeat;
+        const delay = (durationDiff * 4) * msPerBeat;
 
-        playbackTimeout = setTimeout(() => {
-            osmd.cursor.next();
-            
-            // Auto-scroll logic
-            const cursorElement = osmd.cursor.cursorElement;
-            const container = document.getElementById('score-container');
-            if (cursorElement) {
-                const offset = cursorElement.getBoundingClientRect().left;
-                if (offset > window.innerWidth * 0.7) {
-                    container.scrollBy({ left: 250, behavior: 'smooth' });
-                }
+        // Auto-scroll logic
+        const cursorElement = osmd.cursor.cursorElement;
+        if (cursorElement) {
+            const offset = cursorElement.getBoundingClientRect().left;
+            if (offset > window.innerWidth * 0.7) {
+                document.getElementById('score-container').scrollBy({ left: 250, behavior: 'smooth' });
             }
+        }
 
-            if (osmd.cursor.iterator.EndReached) {
-                stopPlayback();
-            } else {
-                playNextNote(); // Recurse to handle the next dynamic duration
-            }
-        }, delay);
+        if (osmd.cursor.iterator.EndReached) {
+            stopPlayback();
+        } else {
+            playbackTimeout = setTimeout(playNextStep, delay);
+        }
     }
 
     function loadMusic(forceRefresh = false) {
