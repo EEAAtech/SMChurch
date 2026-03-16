@@ -250,7 +250,7 @@
 
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-            navigator.serviceWorker.register('./sw.js')
+            navigator.serviceWorker.register('./Easter2026/sw.js')
                 .then(reg => console.log('Offline support ready.'))
                 .catch(err => console.log('Offline registration failed:', err));
             });
