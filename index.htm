@@ -238,12 +238,22 @@
 
         // Check for query string parameter
         const urlParams = new URLSearchParams(window.location.search);
-        const baseURL = "https://eeaatech.github.io/Easter2026/"
+        // Determine the baseURL dynamically based on the current script location
+        const baseURL = window.location.protocol + "//" + window.location.host + "/";
+        
         
         if (urlParams.get('ea') === 'TTM') {
             createLinksTable("SHEET", "CHORDS", "INTRO", " ", "Sheet.pdf", "Chords.png", "Intro.pdf", "404");
         } else {
             createLinksTable("VOICE 1", "VOICE 2", "VOICE 3", "VOICE 4", "1.m4a", "2.m4a", "3.m4a", "4.m4a");
+        }
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./sw.js')
+                .then(reg => console.log('Offline support ready.'))
+                .catch(err => console.log('Offline registration failed:', err));
+            });
         }
     </script>
 </body>
