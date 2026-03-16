@@ -262,7 +262,22 @@
             console.log('This browser does not support service workers.');
         }
 
-        
+        async function listCacheNames() {
+            const cacheNames = await caches.keys();
+            console.log('Available caches:', cacheNames);
+        }
+        listCacheNames();
+
+        async function listUrlsInCache(cacheName) {
+        const cache = await caches.open(cacheName);
+        const requests = await cache.keys();
+        const urls = requests.map(request => request.url);
+        console.log(`URLs in cache "${cacheName}":`, urls);
+        }
+        // Example: list items in a cache named 'myapp-1'
+        listUrlsInCache('myapp-1');
+
+
     </script>
 </body>
 </html>
