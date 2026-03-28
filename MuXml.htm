@@ -168,7 +168,7 @@
             
             // 2. Clear from Service Worker Cache
             if ('caches' in window) {
-                const cache = await caches.open('choir-app-v5');
+                const cache = await caches.open('choir-app-v7');
                 await cache.delete(xmlPath);
             }
             
