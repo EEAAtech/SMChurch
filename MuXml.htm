@@ -45,6 +45,10 @@
             padding: 10px 20px; border-radius: 20px; background: #333; color: white;
             font-size: 14px; opacity: 0; transition: opacity 0.3s; z-index: 2000;
         }
+
+        img[id^="cursorImg"] {
+            filter: brightness(0) invert(1);
+        }
     </style>
 </head>
 <body>
@@ -59,6 +63,7 @@
     </div>
 
     <div id="tempo-val" class="tempo-display">--</div>
+    <br/>
     <div id="score-container"></div>
     <div id="toast"></div>
 
