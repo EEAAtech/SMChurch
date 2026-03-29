@@ -1,4 +1,4 @@
-const CACHE_NAME = 'choir-app-v7'; // Incremented version
+const CACHE_NAME = 'choir-app-v8'; // Incremented version
 const CORE_ASSETS = [
   './',
   './index.htm',
@@ -48,7 +48,7 @@ self.addEventListener('fetch', (event) => {
 
       // Strategy 3: Network-First for everything else
       return fetch(event.request).then((networkResponse) => {
-        const cacheableExtensions = ['.xml', '.txt', '.pdf', '.mp3', '.m4a'];
+        const cacheableExtensions = ['.txt', '.pdf', '.mp3', '.m4a'];
         const shouldCache = cacheableExtensions.some(ext => url.pathname.toLowerCase().endsWith(ext));
 
         if (shouldCache && networkResponse.ok) {
