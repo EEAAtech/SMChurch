@@ -1011,7 +1011,7 @@
                 </lyric>
             </note>
         </measure>
-        <measure number="30" width="199">
+        <measure number="30" width="197">
             <print new-system="yes">
                 <system-layout>
                     <system-margins>
@@ -1065,7 +1065,7 @@
                 </lyric>
             </note>
         </measure>
-        <measure number="31" width="113">
+        <measure number="31" width="111">
             <print new-system="no"/>
             <note>
                 <pitch>
@@ -1096,7 +1096,7 @@
                 </lyric>
             </note>
         </measure>
-        <measure number="32" width="106">
+        <measure number="32" width="105">
             <print new-system="no"/>
             <note>
                 <pitch>
@@ -1120,27 +1120,37 @@
                 <staff>1</staff>
             </note>
         </measure>
-        <measure number="33" width="58">
+        <measure number="33" width="64">
             <print new-system="no"/>
             <note>
-                <rest/>
+                <pitch>
+                    <step>E</step>
+                    <octave>4</octave>
+                </pitch>
                 <duration>3</duration>
                 <voice>1</voice>
-                <type>whole</type>
+                <type>half</type>
+                <dot/>
+                <stem>up</stem>
                 <staff>1</staff>
             </note>
         </measure>
-        <measure number="34" width="59">
+        <measure number="34" width="65">
             <print new-system="no"/>
             <note>
-                <rest/>
+                <pitch>
+                    <step>F</step>
+                    <octave>4</octave>
+                </pitch>
                 <duration>3</duration>
                 <voice>1</voice>
-                <type>whole</type>
+                <type>half</type>
+                <dot/>
+                <stem>up</stem>
                 <staff>1</staff>
             </note>
         </measure>
-        <measure number="35" width="191">
+        <measure number="35" width="189">
             <print new-system="no"/>
             <note>
                 <pitch>
@@ -1185,7 +1195,7 @@
                 </lyric>
             </note>
         </measure>
-        <measure number="36" width="101">
+        <measure number="36" width="99">
             <print new-system="no"/>
             <note>
                 <pitch>
@@ -1216,7 +1226,7 @@
                 </lyric>
             </note>
         </measure>
-        <measure number="37" width="106">
+        <measure number="37" width="104">
             <print new-system="no"/>
             <note>
                 <pitch>
